@@ -72,5 +72,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate :UNUserNotificationCenterDelegate{
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.badge,.alert,.sound])
+    }
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        completionHandler()
+        let id = response.notification.request.identifier
+        print("ID",id)
+        switch response.actionIdentifier {
+        case "Confirm":
+            print("Usuário tocou no botão de confirmação")
+        case "Cancel":
+            print("Usuário tocou no botão de cancelar")
+        case UNNotificationDefaultActionIdentifier:
+            print("Usuário tocou notificação")
+        case UNNotificationDismissActionIdentifier:
+            print("Usuári dismissou a noticação ")
+        default:
+            print("Qq outra coisa")
+        }
+        completionHandler()
+    }
 }
 
