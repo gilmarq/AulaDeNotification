@@ -30,7 +30,11 @@ class ViewController: UIViewController {
         content.sound = UNNotificationSound.default
         content.categoryIdentifier = "Lembrete"
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+        let date = dpDate.date
+        let dateComponents = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute], from: date)
+        
+        let trigger =  UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats:false)
+       // let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.5, repeats: false)
         let request = UNNotificationRequest(identifier: "Lembrete", content: content, trigger: trigger)
         UNUserNotificationCenter.current().add(request) { (error) in
             if let error = error{
